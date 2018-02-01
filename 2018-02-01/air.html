@@ -1,0 +1,179 @@
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+
+<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+
+<style>
+.highcharts-yaxis-grid .highcharts-grid-line {
+	display: none;
+}
+</style>
+
+<div style="width: 600px; height: 400px; margin: 0 auto">
+    <div id="container-pm10" style="width: 300px; height: 200px; float: left"></div>
+    <div id="container-co" style="width: 300px; height: 200px; float: left"></div>
+    <div id="container-no2" style="width: 300px; height: 200px; float: left"></div>
+    <div id="container-so2" style="width: 300px; height: 200px; float: left"></div>
+</div>
+
+<script>
+var gaugeOptions = {
+
+    chart: {
+        type: 'solidgauge'
+    },
+
+    title: null,
+
+    pane: {
+        center: ['50%', '85%'],
+        size: '140%',
+        startAngle: -90,
+        endAngle: 90,
+        background: {
+            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+            innerRadius: '60%',
+            outerRadius: '100%',
+            shape: 'arc'
+        }
+    },
+
+    tooltip: {
+        enabled: false
+    },
+
+    // the value axis
+    yAxis: {
+        stops: [
+            [0.1, '#55BF3B'], // green
+            [0.5, '#DDDF0D'], // yellow
+            [0.9, '#DF5353'] // red
+        ],
+        lineWidth: 0,
+        minorTickInterval: null,
+        tickAmount: 2,
+        title: {
+            y: -70
+        },
+        labels: {
+            y: 16
+        }
+    },
+
+    plotOptions: {
+        solidgauge: {
+            dataLabels: {
+                y: 5,
+                borderWidth: 0,
+                useHTML: true
+            }
+        }
+    }
+};
+
+// The speed gauge
+var chartPM10 = Highcharts.chart('container-pm10', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 500,
+        title: {
+            text: 'PM10'
+        }
+    },
+
+    credits: {
+        enabled: false
+    },
+
+    series: [{
+        name: 'PM10',
+        data: [83.97],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                   '<span style="font-size:12px;color:silver">µg/m³</span></div>'
+        },
+        tooltip: {
+            valueSuffix: ' µg/m³'
+        }
+    }]
+
+}));
+
+// The CO gauge
+var chartCO = Highcharts.chart('container-co', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 120,
+        title: {
+            text: 'CO'
+        }
+    },
+
+    series: [{
+        name: 'CO',
+        data: [48],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.1f}</span><br/>' +
+                   '<span style="font-size:12px;color:silver">ppm</span></div>'
+        },
+        tooltip: {
+            valueSuffix: ' ppm'
+        }
+    }]
+
+}));
+
+// The NO2 gauge
+var chartNO2 = Highcharts.chart('container-no2', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 5,
+        title: {
+            text: 'NO2'
+        }
+    },
+
+    series: [{
+        name: 'NO2',
+        data: [1],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.1f}</span><br/>' +
+                   '<span style="font-size:12px;color:silver">ppb</span></div>'
+        },
+        tooltip: {
+            valueSuffix: ' ppb'
+        }
+    }]
+
+}));
+
+
+// The SO2 gauge
+var chartSO2 = Highcharts.chart('container-so2', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 5,
+        title: {
+            text: 'SO2'
+        }
+    },
+
+    series: [{
+        name: 'SO2',
+        data: [1],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.1f}</span><br/>' +
+                   '<span style="font-size:12px;color:silver">ppb</span></div>'
+        },
+        tooltip: {
+            valueSuffix: ' ppb'
+        }
+    }]
+
+}));
+</script>
+

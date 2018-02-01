@@ -1,0 +1,124 @@
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<script>
+var crfloodUrl = 'http://crflood.com/data-service/data-level.php?s=stg05&t=1';
+
+var crfloodChart = null;
+
+function loadAndRender() {
+  var request = new XMLHttpRequest();
+  request.open('GET', crfloodUrl);
+  request.responseType = 'json';
+  request.send();
+  request.onload = function() {
+    var json = request.response;
+    if (!crfloodChart) {
+        crfloodChart = Highcharts.chart('container', {
+            chart: {
+                type: 'spline'
+            },
+            title: {
+                text: 'CRFlood water level'
+            },
+            subtitle: {
+                text: 'asdasdsda'
+            },
+            xAxis: {
+                type: 'datetime',
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Wind speed (m/s)'
+                },
+                minorGridLineWidth: 0,
+                gridLineWidth: 0,
+                alternateGridColor: null,
+                plotBands: [{ // Light air
+                    from: 0.0,
+                    to: 0.25,
+                    color: 'rgba(68, 170, 213, 0.1)',
+                    label: {
+                        text: 'Light air',
+                        style: {
+                            color: '#606060'
+                        }
+                    }
+                }, { // Light breeze
+                    from: 0.25,
+                    to: 0.5, 
+                    color: 'rgba(0, 0, 0, 0)',
+                    label: {
+                        text: 'Light breeze',
+                        style: {
+                            color: '#606060'
+                        }
+                    }
+                }, { // Gentle breeze
+                    from: 0.5, 
+                    to: 0.75,
+                    color: 'rgba(68, 170, 213, 0.1)',
+                    label: {
+                        text: 'Gentle breeze',
+                        style: {
+                            color: '#606060'
+                        }
+                    }
+                }, { // Moderate breeze
+                    from: 0.75,
+                    to: 1.0,
+                    color: 'rgba(0, 0, 0, 0)',
+                    label: {
+                        text: 'Moderate breeze',
+                        style: {
+                            color: '#606060'
+                        }
+                    }
+                }]
+            },
+            tooltip: {
+                valueSuffix: ' '
+            },
+            plotOptions: {
+                spline: {
+                    lineWidth: 4,
+                    states: {
+                        hover: {
+                            lineWidth: 5
+                        }
+                    },
+                    marker: {
+                        enabled: false
+                    },
+                    pointInterval: 3600000, // one hour
+                    pointStart: Date.UTC(2015, 4, 31, 0, 0, 0)
+                }
+            },
+            series: [{
+                name: json[0].name,
+                data: json[0].data
+            }],
+            navigation: {
+                menuItemStyle: {
+                    fontSize: '10px'
+                }
+            }
+        });
+    } else {
+        for (var i = 0; i < json[0].data.length; i++) {
+            crfloodChart.series[0].points[i].update(json[0].data[i]);
+        }
+    }
+    setTimeout(loadAndRender, 2000);
+  }
+}
+
+loadAndRender();
+
+</script>
