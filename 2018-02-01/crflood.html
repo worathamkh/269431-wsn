@@ -25,7 +25,7 @@ function loadAndRender() {
                 text: 'CRFlood water level'
             },
             subtitle: {
-                text: 'asdasdsda'
+                text: ''
             },
             xAxis: {
                 type: 'datetime',
@@ -45,7 +45,7 @@ function loadAndRender() {
                     to: 0.25,
                     color: 'rgba(68, 170, 213, 0.1)',
                     label: {
-                        text: 'Light air',
+                        text: 'Very low',
                         style: {
                             color: '#606060'
                         }
@@ -55,7 +55,7 @@ function loadAndRender() {
                     to: 0.5, 
                     color: 'rgba(0, 0, 0, 0)',
                     label: {
-                        text: 'Light breeze',
+                        text: 'Low',
                         style: {
                             color: '#606060'
                         }
@@ -65,7 +65,7 @@ function loadAndRender() {
                     to: 0.75,
                     color: 'rgba(68, 170, 213, 0.1)',
                     label: {
-                        text: 'Gentle breeze',
+                        text: 'High',
                         style: {
                             color: '#606060'
                         }
@@ -75,7 +75,7 @@ function loadAndRender() {
                     to: 1.0,
                     color: 'rgba(0, 0, 0, 0)',
                     label: {
-                        text: 'Moderate breeze',
+                        text: 'Very high',
                         style: {
                             color: '#606060'
                         }
@@ -114,8 +114,9 @@ function loadAndRender() {
         for (var i = 0; i < json[0].data.length; i++) {
             crfloodChart.series[0].points[i].update(json[0].data[i]);
         }
+        crfloodChart.subtitle.update({ text: 'Last update at ' + new Date() });
     }
-    setTimeout(loadAndRender, 2000);
+    setTimeout(loadAndRender, 1000);
   }
 }
 
